@@ -1,0 +1,30 @@
+name: Sync from upstream staging
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: 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
+          fetch-depth: 0
+      - name: Add upstream and sync
+        env:
+          UPSTREAM_TOKEN: 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
+          PERSONAL_TOKEN: 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
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git remote add upstream https://x-access-token:${UPSTREAM_TOKEN}@github.com/ims-hirosaki/projsync
+          git fetch upstream staging
+          git reset --hard upstream/staging
+          rm -rf .github/workflows/
+          mkdir -p .github/workflows/
+          git add -A
+          git commit --allow-empty -m "Sync from upstream staging"
+          git push https://x-access-token:${PERSONAL_TOKEN}@github.com/git-ims-shiroto/projsync.git main --force
