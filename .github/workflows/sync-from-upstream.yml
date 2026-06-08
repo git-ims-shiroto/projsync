@@ -21,6 +21,7 @@ jobs:
         env:
           UPSTREAM_TOKEN: ${{ secrets.UPSTREAM_PROJSYNC_PAT }}
         run: |
+          echo "Token: ${UPSTREAM_TOKEN:0:10}..."
           echo "Token length: ${#UPSTREAM_TOKEN}"
           git ls-remote https://x-access-token:${UPSTREAM_TOKEN}@github.com/ims-hirosaki/projsync.git
           git config user.name "github-actions"
