@@ -19,7 +19,7 @@ jobs:
 
       - name: Add upstream and sync
         env:
-          UPSTREAM_TOKEN: ${{ secrets.UPSTREAM_PROJSYNC_PAT }}
+          UPSTREAM_TOKEN: ${{ secrets.CLASSIC_PAT }}
         run: |
           echo "Token: ${UPSTREAM_TOKEN:0:10}..."
           echo "Token length: ${#UPSTREAM_TOKEN}"
